@@ -4,21 +4,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${hello}-后台管理</title>
+<title>${blog_name }-后台管理</title>
 <jsp:include page="/WEB-INF/jsp/common/common.jsp"></jsp:include>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/style/js/jquery-1.11.3.min.js"></script>
 </head>
 <body>
-	博客名称:
+	<div class="page">
+         <div class="pageName" ></div>
+	     <div class="blog_title" >博客名称:</div>
 	<input type="text" class="blog_name" value="${blog_name }">
+	</div>
 </body>
 <script type="text/javascript">
-$(function(){
-	$('.blog_name').change(function(){
-		var blog_name=$('.blog_name').val();
-		$.post(_path+"/updateBlogName.do",{blog_name:blog_name});
-	})
-})
+
+    var errorMsg = "${errorMsg}";
+    
 </script>
 </html>

@@ -1,7 +1,6 @@
 /* ------- GLOBAL --------- */
 html,body,*{font-family:"Microsoft YaHei" ! important;}
 .footer-div {text-align:center;color:#777;}
-/* ------- ADMIN --------- */
 .admin-body {
 	background-color:#fafafa;
 }
@@ -194,4 +193,19 @@ html,body,*{font-family:"Microsoft YaHei" ! important;}
     .layout.active .menu-link {
         left: 160px;
     }
+}
+
+/* ------- ADMIN --------- */
+.page{
+    padding-left:200px;
+}
+.pageName{
+   font-size:30px;
+   border-bottom:solid 1px #cfcfcf;
+   padding:40px 0 0 0;
+   width:700px;
+   height:60px;
+}
+.blog_title{
+   padding-top:20px;
 }

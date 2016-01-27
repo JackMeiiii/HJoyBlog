@@ -37,7 +37,7 @@ public final class GlobalConstraints {
 		/** 自动登录失败 */
 		public static final int AUTO_LOGIN_FAILD = 10003;
 		/**库中不存在数据*/
-		public static final int NULL_POINT=10004;
+		public static final int NOT_EXSIT_DATA = 90000;
 	}
 	
 	/** 请求路径 */

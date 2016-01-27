@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
-import com.hanyx.hjoyblog.bean.ErrorCode;
 import com.hanyx.hjoyblog.bean.SysParam;
 import com.hanyx.hjoyblog.dao.SysParamDao;
 import com.hanyx.hjoyblog.exception.BusiException;
@@ -31,7 +30,7 @@ public class SysParamSvcImpl implements ISysParamSvc {
 				log.error("[" + code + "]" + "没有对应的值");
 			}
 		} catch (Exception e) {
-			throw new BusiException(GlobalConstraints.ErrorCode.NULL_POINT);
+			throw new BusiException(GlobalConstraints.ErrorCode.NOT_EXSIT_DATA);
 		}
 		return value;
 	}
@@ -61,7 +60,10 @@ public class SysParamSvcImpl implements ISysParamSvc {
 	@Override
 	public void updateValueByCode(String code, String val) {
 		Query query = new Query(Criteria.where("code").is(code));
-		Update update = Update.update("value", val);
+		Update update = new Update();
+		update.set("value", val);
+		update.set("key", code);
+		update.set("desc", "");
 		sysParamDao.updateInser(query, update);
 	}
 

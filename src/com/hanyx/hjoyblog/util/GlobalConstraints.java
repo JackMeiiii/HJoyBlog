@@ -36,6 +36,8 @@ public final class GlobalConstraints {
 		public static final int WRONG_NAME_OR_PWD = 10002;
 		/** 自动登录失败 */
 		public static final int AUTO_LOGIN_FAILD = 10003;
+		/**库中不存在数据*/
+		public static final int NULL_POINT=10004;
 	}
 	
 	/** 请求路径 */

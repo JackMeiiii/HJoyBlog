@@ -30,6 +30,11 @@ public class HJoyBlogExceptionHandler implements HandlerExceptionResolver{
 				mv.addObject("errorMsg", busiEx.getMessage());
 				mv.setViewName("/admin/login");
 				break;
+			case (GlobalConstraints.ErrorCode.NULL_POINT):
+				mv=new ModelAndView();
+			    mv.addObject("errorMsg",busiEx.getMessage());
+			    mv.setViewName("/admin/click1");
+			    break;
 			default :
 				break;
 			}

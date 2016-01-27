@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hanyx.hjoyblog.bean.User;
+import com.hanyx.hjoyblog.service.sysparam.ISysParamSvc;
 import com.hanyx.hjoyblog.service.user.IUserSvc;
 import com.hanyx.hjoyblog.util.GlobalConstraints;
 import com.hanyx.hjoyblog.util.SessionUtil;
@@ -29,6 +30,8 @@ public class SysAdminController {
 	@Autowired
 	private IUserSvc userSvc;
 	
+	@Autowired
+	private ISysParamSvc sysParamSvc;
 	/**
 	 * @desc: 跳转至登录页面
 	 * @author: 韩元旭
@@ -124,5 +127,4 @@ public class SysAdminController {
 			HttpServletResponse response) {
 		return "/admin/setting";
 	}
-	
 }

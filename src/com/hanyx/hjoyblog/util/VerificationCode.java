@@ -30,24 +30,24 @@ public class VerificationCode {
 		return new Color(r,g,b);
 	}
 	//BufferedImage Graphics ImageIO
-	//鍦ㄥ唴瀛樹腑鍒涘缓鍥捐薄 鑾峰彇鍥惧舰涓婁笅鏂?鐢熸垚闅忔満绫?璁惧畾鑳屾櫙鑹?濉厖鐭╁舰  璁剧疆瀛椾綋  鐢昏竟妗? 闅忔満浜х敓155鏉″共鎵扮嚎 鍙栭殢鏈虹敓鎴愮殑楠岃瘉鐮?浣嶆暟瀛?灏嗚璇佺爜鏄剧ず鍒板浘璞′腑 鍥惧儚鐢熸晥
-	//杈撳嚭鍥惧儚鍒伴〉闈?)
 	public static String verifyCode(OutputStream os) throws IOException{
 		int width=60,height=21;
-		BufferedImage image=new BufferedImage(0, 0, BufferedImage.TYPE_INT_RGB);
-		//鑾峰彇鍥惧舰涓婁笅鏂?
+		//创建图像
+		BufferedImage image=new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		//获取图像上下文
 		Graphics gh=image.getGraphics();
-		//鐢熸垚闅忔満绫?
+		//获取随机数
 		Random random=new Random();
-		//璁剧疆鑳屾櫙鑹?
-		gh.setColor(getRandColor(200, 255));
-		//濉厖鐭╁舰
+		//设置背景色
+		gh.setColor(getRandColor(200, 250));
+		//矩形框
 		gh.fillRect(0, 0, width, height);
-		//璁剧疆瀛椾綋
-		gh.setFont(new Font("MONOSPACED",Font.ITALIC,20 ));
-		//鐢昏竟妗?
+		//设置字体
+		gh.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		//画边框
+		gh.setColor(new Color(0xcc, 0xd9, 0xe8));
 		gh.drawRect(0,0,width,height);
-		//闅忔満浜х敓155鏉″共鎵扮嚎
+		//干扰线
 		for(int i=0;i<155;i++){
 			int x=random.nextInt(width);
 			int y=random.nextInt(height);
@@ -55,17 +55,18 @@ public class VerificationCode {
 			int y1=random.nextInt(12);
 			gh.drawLine(x,y,(x+x1),(y+y1));
 		}
-		//鍘婚殢鏈虹敓鎴愮殑鍥涗綅楠岃瘉鐮?
+		//生成随机数
 		String codes="";
 		for(int i=0;i<4;i++){
-			String code=String.valueOf(random.nextInt());
+			String code=String.valueOf(random.nextInt(10));
 			codes+=code;
-			//灏嗛獙璇佺爜鏄剧ず鍦ㄥ浘鍍忓綋涓?
+			//将验证码显示在图像中
+			gh.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
 			gh.drawString(code, (13*i)+6, 16);
 		}
-		//鍥惧儚鐢熸晥
+		//图像生效
 		gh.dispose();
-		//杈撳嚭鍥惧儚鍒伴〉闈?
+		//输出图像到页面
 		ImageIO.write(image,"JPEG", os);
 		return codes;
 	}

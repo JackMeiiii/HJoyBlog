@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import com.hanyx.hjoyblog.dao.SysParamDao;
+import com.hanyx.hjoyblog.exception.BusiException;
+import com.hanyx.hjoyblog.util.GlobalConstraints;
 import com.hanyx.hjoyblog.util.StringUtil;
 
 public class SysParamSvcImpl implements ISysParamSvc {
@@ -17,12 +19,15 @@ public class SysParamSvcImpl implements ISysParamSvc {
 	private static Log log = LogFactory.getLog(SysParamSvcImpl.class);
 
 	@Override
-	public String getValueByCode(String code) {
-		String value = sysParamDao.queryOne(
-				new Query(Criteria.where("code").is(code)))
-				.getValue();
-		if (StringUtil.isRealEmpty(value)) {
-			log.error("[" + code + "]" + "没有对应的值");
+	public String getValueByCode(String code) throws Exception {
+		String value = "";
+		try{
+			value = sysParamDao.queryOne(new Query().addCriteria(Criteria.where("code").is(code))).getValue();
+			if(StringUtil.isRealEmpty(value)){
+				log.error("["+ code +"]"+"无对应值");
+			}
+		}catch(Exception e){
+			throw new BusiException(GlobalConstraints.ErrorCode.NOT_EXSIT_DATA);
 		}
 		return value;
 	}
@@ -51,9 +56,12 @@ public class SysParamSvcImpl implements ISysParamSvc {
 
 	@Override
 	public void updateValueByCode(String code,String val) {
-		Query query=new Query(Criteria.where("code").is(code));
-		Update update=Update.update("value",val);
-		sysParamDao.updateFirst(query, update);
+		Query query = new Query(Criteria.where("code").is(code));
+		Update update = new Update();
+		update.set("value", val);
+		update.set("key", code);
+		update.set("desc", "");
+		sysParamDao.updateInser(query, update);
 	}
 
 	@Override
@@ -65,8 +73,8 @@ public class SysParamSvcImpl implements ISysParamSvc {
 
 	@Override
 	public void updateValueByKey(String key,String value) {
-		Query query=new Query(Criteria.where("key").is(key));
-		Update update=Update.update("value", value);
+		Query query = new Query(Criteria.where("key").is(key));
+		Update update = Update.update("value", value);
 		sysParamDao.updateFirst(query, update);
 	}
 
